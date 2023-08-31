@@ -143,19 +143,22 @@ async function commit(message, repo) {
 
     await implModule.post(utils, buildContext(config, config.postImpl, fileCount, entitys));
 
-    ///repo.commit(message);
+    repo.commit(message);
 
-    const push = await prompts({
-        type: 'toggle',
-        name: 'yes',
-        message: '全部文件处理完毕,是否执行git push: ',
-        active: '是',
-        inactive: '否'
-    })
-
-    if (push.yes) {
-        repo.push();
+    const remotes = await repo.getRemotes();
+    if (remotes.length > 0) {
+        const push = await prompts({
+            type: 'toggle',
+            name: 'yes',
+            message: '全部文件处理完毕,是否执行git push: ',
+            active: '是',
+            inactive: '否'
+        })
+        if (push.yes) {
+            repo.push();
+        }
     }
+
 
 }
 
@@ -218,7 +221,6 @@ async function initConfig(firstInit) {
     }
 
     config[postImpl.name].modulePath = postImpl.modulePath;
-
 
     let mode = 'disable';
 
