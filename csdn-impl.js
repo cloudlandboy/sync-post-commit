@@ -34,7 +34,6 @@ async function post(utils, context) {
 
 async function create(utils, context, entity, axiosInstance) {
 
-    console.log(context.getSyncRecords());
     if (context.getSyncRecords()[entity.relativePath]) {
         return update(utils, context, entity, axiosInstance);
     }
@@ -45,6 +44,7 @@ async function create(utils, context, entity, axiosInstance) {
             type: 'text',
             name: 'title',
             message: '文章标题(必填): ',
+            initial: utils.extractMarkdownTitle(entity.content),
             validate: value => value.trim().length > 0
         },
         {
@@ -176,7 +176,6 @@ async function buildRequest(utils, context) {
         console.log(`当前登录用户: ${res.data.data.nickname}`);
         return axiosInstance;
     } catch (error) {
-        console.log(error);
         if (error.response.status === 401) {
             return inquireReConfig(utils, context);
         }

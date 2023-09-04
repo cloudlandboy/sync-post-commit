@@ -20,6 +20,10 @@ graph TD
 
 
 
+如果你不想提交到远程仓库，可以使用 `git init` 初始化一个本地仓库，把他当作一个命令行工具使用，不需要 `git push` 
+
+
+
 **源码：** https://github.com/cloudlandboy/sync-post-commit
 
 
@@ -69,6 +73,15 @@ npm install sync-post-commit -g
 
 
 
+## 内置实现
+
+- [x] halo ( 1.x版本 )
+- [x] csdn
+- [x] 语雀
+- [ ] 印象笔记 (TODO)
+- [ ] 博客园 (TODO)
+- [ ] 简书 (TODO)
+
 
 
 ## 自定义推送实现
@@ -91,53 +104,50 @@ async function configure(utils, implConfig) {
 }
 ```
 
-- `utils` ：
 
-  - `fileExists(path)` : 判断文件是否存在，参数：文件绝对路径
-  - `removeBlankItem(stringArray)` : 删除字符串数组中的空白字符元素
-  - `extractMarkdownTitle(content)` : 提取markdown文档内容标题
-  - `getPureDateTime()` : 获取 `yyyyMMddHHmmss` 格式日期时间 
-  - `axios` :  [Axios](https://www.npmjs.com/package/axios) , http客户端
-  - `ora` : [ora](https://www.npmjs.com/package/ora) , 终端loading
-  - `prompts` : [prompts](https://www.npmjs.com/package/prompts) , 控制台交互
-  - `marked` : [marked](https://www.npmjs.com/package/marked) , markdown解析器
 
-- `context` : 
+------
 
-  - `config` : 配置信息
+`utils` ：
 
-  - `implConfig` : 实现自己的配置部分信息
+- `fileExists(path)` : 判断文件是否存在，参数：文件绝对路径
+- `removeBlankItem(stringArray)` : 删除字符串数组中的空白字符元素
+- `extractMarkdownTitle(content)` : 提取markdown文档内容标题
+- `getPureDateTime()` : 获取 `yyyyMMddHHmmss` 格式日期时间 
+- `axios` :  [Axios](https://www.npmjs.com/package/axios) , http客户端
+- `ora` : [ora](https://www.npmjs.com/package/ora) , 终端loading
+- `prompts` : [prompts](https://www.npmjs.com/package/prompts) , 控制台交互
+- `marked` : [marked](https://www.npmjs.com/package/marked) , markdown解析器
 
-  - `configFolderPath` : 配置文件所在目录绝对路径
+------
 
-  - `repoPath` : 运行命令所在项目目录绝对路径
+`context` : 
 
-  - `fileCount` : 本次预计推送文件总数
+- `config` : 配置信息
+- `implConfig` : 实现自己的配置部分信息
+- `configFolderPath` : 配置文件所在目录绝对路径
+- `repoPath` : 运行命令所在项目目录绝对路径
+- `fileCount` : 本次预计推送文件总数
+- `entitys` : 所有文件数据集合
+  
+  ```json
+  [
+      {
+          "flag": "文件状态, c:创建, u:更新, d:删除",
+          "content": "文件内容",
+          "relativePath": "文件相对于项目的路径",
+          "absolutePath": "文件绝对路径"
+      }
+  ]
+  ```
+  
+- `syncRecordsFilePath` : 同步记录文件路径
+- `refreshConfig()` : 更新配置到磁盘
+- `getSyncRecords()` : 获取同步记录
+- `flushSyncRecords()` : 更新同步记录到磁盘
+  ```javascript
+  context.getSyncRecords()[entity.relativePath] = res.data.data.article_id;
+  context.flushSyncRecords();
+  ```
 
-  - `entitys` : 所有文件数据集合
-
-    ```json
-    [
-        {
-            "flag": "文件状态, c:创建, u:更新, d:删除",
-            "content": "文件内容",
-            "relativePath": "文件相对于项目的路径",
-            "absolutePath": "文件绝对路径"
-        }
-    ]
-    ```
-
-  - `syncRecordsFilePath` : 同步记录文件路径
-
-  - `refreshConfig()` : 更新配置到磁盘
-
-  - `getSyncRecords()` : 获取同步记录
-
-  - `flushSyncRecords()` : 更新同步记录到磁盘
-
-    ```javascript
-    context.getSyncRecords()[entity.relativePath] = res.data.data.article_id;
-    context.flushSyncRecords();
-    ```
-
-    
+  

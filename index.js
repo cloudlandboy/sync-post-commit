@@ -24,6 +24,10 @@ const INTERNAL_MODULE = {
     },
     'csdn': {
         path: './csdn-impl'
+    },
+    'yuque': {
+        path: './yuque-impl',
+        description: '语雀'
     }
 }
 
@@ -207,7 +211,6 @@ async function initConfig(firstInit) {
     if (INTERNAL_MODULE[postImpl.name]) {
         implModule = require(INTERNAL_MODULE[postImpl.name].path);
     } else {
-        console.log(postImpl);
         implModule = require(postImpl.modulePath);
     }
 
@@ -332,7 +335,9 @@ function buildEntity(relativePath, flag) {
         flag,
         content,
         relativePath,
-        absolutePath
+        absolutePath,
+        fileName: path.basename(relativePath),
+        extension: path.extname(relativePath).substring(1)
     };
 }
 
