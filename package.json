@@ -1,13 +1,18 @@
 {
   "name": "sync-post-commit",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "Git提交时将内容推送到别的平台",
   "main": "index.js",
   "bin": {
     "sync-post-commit": "./index.js"
   },
   "scripts": {},
-  "keywords": ["blog","git commit","halo","docsify"],
+  "keywords": [
+    "blog",
+    "git commit",
+    "halo",
+    "docsify"
+  ],
   "author": "clboy",
   "license": "ISC",
   "homepage": "https://github.com/cloudlandboy/sync-post-commit",

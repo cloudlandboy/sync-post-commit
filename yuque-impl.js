@@ -183,9 +183,8 @@ async function configure(utils, implConfig) {
 }
 
 async function chooseDirectory(utils, context, lib, axiosInstance) {
-
     if (!lib.$$directory) {
-        const libPageUrl = `https://www.yuque.com/${context.loginUserInfo.account.name}/${lib.slug}`;
+        const libPageUrl = `https://www.yuque.com/${context.loginUserInfo.login}/${lib.slug}`;
         let res = await axiosInstance.get(libPageUrl);
         const jsonMatch = res.data.match(/window\.appData = JSON\.parse\(decodeURIComponent\(\"(\S+)\"\)\);/);
         const appData = JSON.parse(decodeURIComponent(jsonMatch[1]));
