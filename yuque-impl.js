@@ -37,7 +37,6 @@ async function post(utils, context) {
 
 }
 
-
 async function create(utils, context, entity, axiosInstance) {
 
     if (context.getSyncRecords()[entity.relativePath]) {

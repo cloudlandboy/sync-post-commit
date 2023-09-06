@@ -16,7 +16,6 @@ const configFolderPath = path.join(userHomeDir, '.sync-post-commit');
 const configPath = path.join(configFolderPath, 'config.json');
 const utils = { fileExists, removeBlankItem, extractMarkdownTitle, getPureDateTime, axios, ora, prompts, marked }
 
-
 const INTERNAL_MODULE = {
     'halo1': {
         path: './halo1-impl',
@@ -28,6 +27,10 @@ const INTERNAL_MODULE = {
     'yuque': {
         path: './yuque-impl',
         description: '语雀'
+    },
+    'yinxiang': {
+        path: './yinxiang-impl',
+        description: '印象笔记'
     }
 }
 
@@ -162,8 +165,6 @@ async function commit(message, repo) {
             repo.push();
         }
     }
-
-
 }
 
 /**
